@@ -1,0 +1,17 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: es-cleaner
+spec:
+  schedule: "0 2 */1 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: es-cleaner
+            image: node1:30400/es-cleaner
+            args:
+            - -e 
+            - elasticsearch-logging.kube-system.svc.cluster.local
+          restartPolicy: Never
